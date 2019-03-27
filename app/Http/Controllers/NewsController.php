@@ -31,6 +31,9 @@ class NewsController extends Controller
 
         if($Validator->fails()){
             echo "loi validator";
+            $errors['errors']=$Validator->errors();
+            return redirect()->back()->with($errors);
+
         }else{
             Session::flash('success','');
             Session::flash('error','');
@@ -63,14 +66,14 @@ class NewsController extends Controller
  
     }
 
-    public function getNewsByCatId($cat_id){
-        $data['listNews'] = DB::table('blog_news')->where('cat_id',$cat_id)->get()->toArray();
-        $data['categories'] = DB::table('blog_category')->distinct()->take(7)->get()->toArray();
-        $data['newspost'] = DB::table('blog_news')->orderby('created_at','desc')->take(10)->get()->toarray();
-        $data['category'] = DB::table('blog_category')->where('cat_id',$cat_id)->first();
-        if($data['listNews'] ==null){
-            return view('404');
+    public function getNewsByCatId($cat_id = -1){
+       $data = HomeController::getData();
+        if($cat_id <0){
+            return view('allCategory',$data);
         }
+        $data['category'] = DB::table('blog_category')->where('cat_id',$cat_id)->first();
+        $data['listNews'] = DB::table('blog_news')->where('cat_id',$cat_id)->get()->toArray();
+        
         return view('category',$data);
     }
 
@@ -79,26 +82,76 @@ class NewsController extends Controller
     }
 
     public function getNewsById($news_id){
+        $data = HomeController::getData();
         $data['news'] = DB::table('blog_news')->where('news_id',$news_id)->first();
-        $data['categories'] = DB::table('blog_category')->distinct()->take(7)->get()->toArray();
-        $data['newspost'] = DB::table('blog_news')->orderby('created_at','desc')->take(10)->get()->toarray();
-        if($data['news'] ==null){
-            return view('404');
-        }
+        
+        #update so luot view
+        $news_seen = $data['news']->news_seen;
+        $news_seen++;
+        DB::table('blog_news')->where('news_id',$news_id)->update(['news_seen' => $news_seen]);
         return view('post',$data);
     }
 
     public function getEdit(){
         $data['listNews'] = DB::table('blog_news')->get()->toArray();
         $data['categories'] = DB::table('blog_category')->get()->toArray();
-        return view('editnews',$data);
+        return view('admin.news.edit',$data);
     }
-    public function postEdit(){
-        die('Hello world');
-        $news_id = $request->input('news_id');
-        echo "sdsdfsf";
-        echo $news_id;
-        return view('editnews');
+    public function postEdit(Request $request){
+        $rules = [
+                    'news_name'=>'required',
+                    //'img'=>'required',
+                    'news_content'=>'required'
+        ];
+
+        $messages = [
+                    'news_name.required'=>'tiêu đề bài viết không được để trống',
+                    //'img.required'=>'ảnh bài viết không được để trống',
+                    'news_content.required'=>'nội dung bài viết không được để trống'
+        ];
+
+        $Validator = Validator::make($request->all(),$rules,$messages);
+
+        if($Validator->fails()){
+            echo "loi validator";
+            $errors['errors']=$Validator->errors();
+            return redirect()->back()->with($errors);
+        }else{
+            Session::flash('success','');
+            Session::flash('error','');
+            $news_id = $request->news_id;
+            $arr['news_name'] = $request->news_name;
+            $arr['news_slug'] = str_slug($request->news_name);
+            $arr['cat_id'] = $request->cat_id;
+            $arr['news_author']= $request->news_author;
+            $arr['news_content'] = $request->news_content;
+            $arr['updated_at'] = gmdate("Y-m-d H:i:s",time()+7*3600);
+            // if(strtolower(pathinfo($_FILES['img']['name'],PATHINFO_EXTENSION))=='png' || true){
+                //$arr['news_img'] = $_FILES['img']['name'];
+                // /$name ='img';
+                //$file_name = $request->file($name)->getClientOriginalName();
+                // Lưu file vào thư mục upload với tên là biến $filename
+                //$request->file($name)->move('img',$file_name);
+                DB::table('blog_news')->where('news_id',$news_id)->update($arr);
+                echo "them thanh cong";
+                Session::flash('success','update bai viet viết thành công');
+                return redirect()->back();
+            //}
+
+            // else{
+            //     Session::flash('error','ảnh không đúng định dạng');
+            //     echo "them loi";
+            //     //return redirect()->back();
+            // }
+
+        }
+    }
+
+    public function postDel($news_id){
+        DB::table('blog_news')->where('news_id',$news_id)->delete();
+        echo "xoa thanh cong";
+        Session::flash('success','xoa bai viet viết thành công');
+        return redirect()->back(); 
     }
 
 }

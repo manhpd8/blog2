@@ -22,7 +22,7 @@ class CheckLogin
                 'user_pass'=>Session::get('login')->user_pass,
             ];
             if(DB::table('blog_users')->where($coditions)->count() ==1){
-                return redirect()->route('home');
+                return redirect()->action('HomeController@getHome');
             }
             else{
                 return $next($request);

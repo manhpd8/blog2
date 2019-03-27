@@ -54,8 +54,9 @@ class LoginController extends Controller
 				$data = DB::table('blog_users')->where($coditions)->first();
 				Session::put('login',$data);
 				$errors['success']='dang nhap thanh cong';
-				return redirect()->action('HomeController@getHome');
+				//return redirect()->action('HomeController@getHome');
 				//return response()->view('home');//->withCookie($cookie);
+				return view('admin.index');
 
 			} else{
 				echo 'login false';
@@ -78,4 +79,9 @@ class LoginController extends Controller
 
 		return redirect()->intended('login');
 	}
+
+	public function getIndex(){
+		return view('admin.index');
+	}
+
 }

@@ -17,25 +17,24 @@
   <!-- Default panel contents -->
   <h1>Edit Post</h1>
   <div class="panel-body">
-    <table class="table">
+    <table class="table" id="example">
       <thead class="thead-dark">
         <th scope="col">id</th>
         <th scope="col">name</th>
         <th scope="col">img</th>
         <th scope="col">author</th>
-        <th scope="col">content</th>
+        <!-- <th scope="col">content</th> -->
         <th scope="col">category</th>
         <th scope="col">created</th>
         <th scope="col">action</th>
     </thead>
     @foreach($listNews as $item)
       <tr>
-        <form method="post" >
         <td>{{$item->news_id}}</td>
-        <td><textarea style="width: ; height: 60px" id="news_name">{{$item->news_name}}</textarea></td>
+        <td><p style="width: ; height: 60px" id="news_name">{{$item->news_name}}</p></td>
         <td><img src="/blog2/public/img/{{$item->news_img}}" width="60px" height="60px"></td>
-        <td><textarea style="width: ; height: 60px" id="news_author">{{$item->news_author}}</textarea></td>
-        <td><textarea style="width: 400px; height: 60px" id="news_content">{{$item->news_content}}</textarea></td>
+        <td><p style="width: ; height: 60px" id="news_author">{{$item->news_author}}</p></td>
+        <!-- <td><textarea style="width: 400px; height: 60px" id="news_content">{{$item->news_content}}</textarea></td> -->
         <td><select id="cat_id">
           @foreach($categories as $item2)
             @if($item2->cat_id == $item->cat_id)
@@ -45,128 +44,76 @@
             @endif
           @endforeach
         </select></td>
-        <td><textarea style="width: ; height: 30px" id="created_at">{{$item->created_at}}</textarea></td>
+        <td><p style="width: ; height: 30px" id="created_at">{{$item->created_at}}</p></td>
         <td>
-          <button type="submit" class="btn btn-primary">Update</button>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter{{$item->news_id}}">Edit</button>
+          <form action="/blog2/public/editnews/del/{{$item->news_id}}" method="post">{{ csrf_field() }}
+            <button type="submit" class="btn btn-primary">Delete</button>
+          </form>
         </td>
-        </form>
       </tr>
+      <!-- modal -->
+      <div class="modal fade" id="exampleModalCenter{{$item->news_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">news id = {{$item->news_id}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <!-- form edit -->
+            <form method="post" enctype="multipart/form-data">{{ csrf_field() }}
+              <input type="" name="news_id" value="{{$item->news_id}}" hidden="true">
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Name Post</label>
+                <input type="text" class="form-control" name="news_name" placeholder="name post" value="{{$item->news_name}}">
+                <div style="color: red">{{ $errors->first('news_name') }}</div>
+            </div>
+              <div class="form-group">
+                <label for="exampleFormControlSelect1">Category</label>
+                <select name="cat_id" id="cat_id">
+                  @foreach($categories as $item2)
+                    @if($item2->cat_id == $item->cat_id)
+                      <option value="{{$item2->cat_id}}" selected="">{{$item2->cat_name}}</option>
+                    @else
+                      <option value="{{$item2->cat_id}}">{{$item2->cat_name}}</option>
+                    @endif
+                  @endforeach
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="exampleFormControlInput1">Author</label>
+                <input type="text" class="form-control" name="news_author" placeholder="author" value="{{$item->news_author}}">
+             </div>
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Content</label>
+                <textarea class="form-control" name="news_content" rows="3">{{$item->news_content}}</textarea>
+              </div>
+              <!-- <input type="file" name="img"> -->
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+              </div>
+          </form>
+
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    </div>
     @endforeach
   </table>
   </div>
 </div>
 <div>
-  <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-  Launch demo modal
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-<div>
-  <table id="example" class="display" style="width:100%">
-        <thead>
-            <tr>
-              <th scope="col">id</th>
-              <th scope="col">name</th>
-              <th scope="col">img</th>
-              <th scope="col">author</th>
-              <th scope="col">content</th>
-              <th scope="col">category</th>
-              <th scope="col">created</th>
-              <th scope="col">action</th>
-            </tr>
-        </thead>
-        <tbody>
-            
-            @foreach($listNews as $item)
-            <tr>
-              <td>{{$item->news_name}}</td>
-              <td><input type="" name=""></td>
-              <td><input type="" name=""></td>
-              <td><select>
-                <option value="Edinburgh">
-                        Edinburgh
-                    </option>
-              </select></td>
-            </tr>
-            @endforeach
-        </tbody>
-        <tfoot>
-            <tr>
-                <th>Name</th>
-                <th>Age</th>
-                <th>Position</th>
-                <th>Office</th>
-            </tr>
-        </tfoot>
-    </table>
-</div>
-<div>
-  <script type="text/javascript">
-    $.fn.dataTable.ext.order['dom-text'] = function  ( settings, col )
-{
-    return this.api().column( col, {order:'index'} ).nodes().map( function ( td, i ) {
-        return $('input', td).val();
-    } );
-}
- 
-/* Create an array with the values of all the input boxes in a column, parsed as numbers */
-$.fn.dataTable.ext.order['dom-text-numeric'] = function  ( settings, col )
-{
-    return this.api().column( col, {order:'index'} ).nodes().map( function ( td, i ) {
-        return $('input', td).val() * 1;
-    } );
-}
- 
-/* Create an array with the values of all the select options in a column */
-$.fn.dataTable.ext.order['dom-select'] = function  ( settings, col )
-{
-    return this.api().column( col, {order:'index'} ).nodes().map( function ( td, i ) {
-        return $('select', td).val();
-    } );
-}
- 
-/* Create an array with the values of all the checkboxes in a column */
-$.fn.dataTable.ext.order['dom-checkbox'] = function  ( settings, col )
-{
-    return this.api().column( col, {order:'index'} ).nodes().map( function ( td, i ) {
-        return $('input', td).prop('checked') ? '1' : '0';
-    } );
-}
- 
-/* Initialise the table with the required column ordering data types */
-$(document).ready(function() {
-    $('#example').DataTable( {
-        "columns": [
-            null,
-            { "orderDataType": "dom-text-numeric" },
-            { "orderDataType": "dom-text", type: 'string' },
-            { "orderDataType": "dom-select" },
-            null
-        ]
-    } );
-} );
+<script>
+  var table = $("#example").dataTable();
   </script>
-</div>
+{{ $errors->first('del') }}
+<button onclick="sortByName()">sort by name</button>
+<p id="demo"></p>
 </body>
 </html>

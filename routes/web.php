@@ -16,8 +16,9 @@
 
 #Route::get('login','LoginController@getLogin');
 #Route::get('login','LoginController@getLogin');
+Route::get('/','HomeController@getHome');
+Route::get('home','HomeController@getHome');
 Route::get('people','People@getName');
-Route::get('users', 'User@lan_people');
 #Route::post('login','LoginController@postLogin');
 Route::group(['prefix'=>'login','middleware'=>'checkLogin'], function(){
     Route::post('/','LoginController@postLogin');
@@ -25,18 +26,29 @@ Route::group(['prefix'=>'login','middleware'=>'checkLogin'], function(){
 });
 Route::group(['middleware'=>'checkAdmin'], function(){
     Route::get('logout','LoginController@getLogout');
-    Route::get('home','HomeController@getHome');
-});
-#Route::get('category','Category@menuCategory');
-Route::get('addnews','NewsController@getAdd');
-Route::post('addnews','NewsController@postAdd');
-
-Route::group(['prefix'=>'editnews'], function(){
-    Route::get('/','NewsController@getEdit');
-	Route::post('/','NewsController@postEdit')->name('postEdit');;
+    Route::get('admin2','LoginController@getIndex');
 });
 
 
 Route::get('news/catid/{cat_id}', 'NewsController@getNewsByCatId');
 Route::get('post','NewsController@getPost');
 Route::get('news/newsid/{news_id}', 'NewsController@getNewsById');
+
+Route::group(['prefix'=>'category','middleware'=>'checkAdmin'],function(){
+	Route::get('add','Category@getAdd');
+	Route::post('add','Category@postAdd');
+	Route::get('edit','Category@getEdit');
+	Route::post('edit','Category@postEdit');
+	Route::post('del/{cat_id}','Category@postDel');
+});
+
+Route::group(['prefix'=>'news','middleware'=>'checkAdmin'],function(){
+	Route::get('add','NewsController@getAdd');
+	Route::post('add','NewsController@postAdd');
+	Route::get('edit','NewsController@getEdit');
+	Route::post('edit','NewsController@postEdit');
+	Route::post('del/{news_id}','NewsController@postDel');
+});
+//gio hang
+//Route::post('/cart', 'Front@cart');
+Route::get('cart','HomeController@getCart');

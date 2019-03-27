@@ -24,14 +24,16 @@ p{
 }
 body{
 	
-	text-align: center;
+	/*text-align: center;*/
 }
 #bcontent{
 	width: 80%;
 	display: inline-block;
+	margin-left:10%;
 }
 #hcontent{
 	background-image: url("../img/BG- BODY.PNG");
+	text-align: center;
 }
 #header{
 	width: 80%;
@@ -60,6 +62,9 @@ body{
 	border-width: 0 1px 0 0;
 	border-color: #000;
 	margin-bottom: 3px;
+}
+.hmcell:hover{
+	background-color: red;
 }
 #htchome{
 	background-color: #FF1717;
@@ -145,6 +150,13 @@ body{
 	float: left;
 	margin-top: 7px;
 	margin-left: 2%;
+	background-color: #E6E6E6; 
+	height: 915px; 
+	/*
+	border-width: 1px;
+	border-style: solid; 
+	border-color: #3B8ECE
+	*/
 }
 a{
 	text-decoration: none;
@@ -157,13 +169,13 @@ a:hover{
 .fcell{
 	background-image: linear-gradient(#2A3CAE, #01169E);
 	list-style-type: none;
-	width: 12.4%;
+	width: 12.5%;
 	height: 30px;
 	color: #fff;
 	padding-top: 7px;
 	float: left;
 	border-style: solid;
-	border-width: 0 0 0 1px;
+	border-width: 0 0 0 0px;
 	border-color: #000;
 }
 #hbanner{
@@ -173,7 +185,8 @@ a:hover{
 	height: 28px; color: #fff; padding: 0 10px;margin: 0;background-image: linear-gradient(#022F83, #193FA8); border-width: 0
 }
 #sup_ol{
-	border-width: 1px; border-style: solid;border-color: #3B8ECE
+	border-width: 1px; border-style: solid;border-color: #3B8ECE;
+	text-align:center;
 }
 .sup_p{
 	margin: 5px
