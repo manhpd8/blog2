@@ -7,7 +7,7 @@ class HomeController extends Controller
 {
     //
     public static function getData(){
-        $data['categories'] = DB::table('blog_category')->take(7)->get()->toArray();
+        $data['categories'] = DB::table('blog_category')->where('cat_id','<>','0')->take(7)->get()->toArray();
         $data['newspost'] = DB::table('blog_news')->orderby('created_at','desc')->take(10)->get()->toarray();
         $data['viewpost'] = DB::table('blog_news')->orderby('news_seen','desc')->take(7)->get()->toarray();
         return $data;

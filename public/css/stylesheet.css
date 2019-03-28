@@ -234,3 +234,47 @@ hr{
 #select_page{
 	width: 160px; margin-left: 37%;
 }
+.btn-danger{
+	background-color: #C9302C;
+	color: #fff;
+	font-weight: 600;
+	height: 30px;
+	border-radius: 7px;
+}
+.btn-primary{
+	background-color: #286090;
+	color: #fff;
+	font-weight: 600;
+	height: 30px;
+	border-radius: 7px;
+}
+.btn-info{
+	
+	background-color: #31B0D5;
+	color: #fff;
+	font-weight: 600;
+	height: 30px;
+	border-radius: 7px;
+}
+.btn{
+	display: inline-block;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    border-radius: 4px;
+}
+.btn-default{
+	color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}

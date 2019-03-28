@@ -84,7 +84,9 @@ class NewsController extends Controller
     public function getNewsById($news_id){
         $data = HomeController::getData();
         $data['news'] = DB::table('blog_news')->where('news_id',$news_id)->first();
-        
+        $data['comments'] = DB::table('blog_comment')->where('news_id',$news_id)->orderby('created_at','desc')->take(5)->get()->toarray();
+        $data['rates'] = DB::select('SELECT count(*) as num,rate FROM laravel_blog.blog_rate where news_id= '.$news_id.' group by rate order by rate');
+        $data['ratesAvg'] = DB::select('SELECT avg(rate) as avg FROM laravel_blog.blog_rate');
         #update so luot view
         $news_seen = $data['news']->news_seen;
         $news_seen++;
@@ -154,4 +156,20 @@ class NewsController extends Controller
         return redirect()->back(); 
     }
 
+    public function postComment(Request $request){
+        $arr['news_id'] = $request->news_id;
+        $arr['created_at'] = gmdate("Y-m-d H:i:s",time()+7*3600);
+        $arr['comment_content'] = $request->comment_content;
+        if($arr['comment_content'] != null){
+            DB::table('blog_comment')->insert($arr);
+        }
+        $rateStar = $request->rate;
+        if($rateStar >0 && $rateStar <=5){
+            $rate['news_id'] = $arr['news_id'];
+            $rate['rate'] = $rateStar;
+            DB::table('blog_rate')->insert($rate);
+        }
+        
+        return redirect()->back();
+    }
 }

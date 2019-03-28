@@ -51,4 +51,8 @@ Route::group(['prefix'=>'news','middleware'=>'checkAdmin'],function(){
 });
 //gio hang
 //Route::post('/cart', 'Front@cart');
-Route::get('cart','HomeController@getCart');
+Route::get('cart','CartController@getCart');
+Route::post('cart','CartController@postCart');
+
+Route::post('comment','NewsController@postComment');
+//Route::get('comment','NewsController@postComment');

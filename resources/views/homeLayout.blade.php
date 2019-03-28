@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="/blog2/public/css/stylesheet.css">
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  	<script src="js/jquery.dataTables.min.js" ></script>
+  	<script src="/blog2/public/js/jquery.dataTables.min.js" ></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
 <body>
@@ -14,14 +14,21 @@
 		<table width="100%">
 			<tr width="50%">
 				<td><div id="hlogo">
-			<img src="/blog2/public/img/logo.png">
+					<img src="/blog2/public/img/logo.png">
 
-		</div></td>
+				</div></td>
 				<td width="50%">
 					<div id="hsearch">
 						<input type="text" name="" placeholder="Từ khóa..." style="height: 22px">
 						
 						<button id="btn_search">Tìm Kiếm</button>
+					</div>
+					<div style="text-align: right;">
+						<form method="post" action="/blog2/public/cart">
+					         {{ csrf_field ()}}
+					        <input type="text" name="listNews" id="listNews" hidden="true">
+					        <button type="submit" onclick="getOnclick()"><img src="/blog2/public/img/icon-cart.png" height="30px"></button>
+					    </form>
 					</div>
 				</td>
 			</tr>
@@ -101,5 +108,58 @@
 	</div>
 	</div>
 	</div>
+<script type="text/javascript">
+    function addCart(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        var expires = "expires="+ d.toUTCString();
+        document.cookie = cname + "=" + cvalue + "; " + expires;
+        document.getElementById("add"+cname).style.display = "none";
+    }
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for(var i = 0; i <ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length,c.length);
+            }
+        }
+        return "";
+    }
+    function delCart(cname) {
+        var d = new Date();
+        d.setTime(d.getTime() );
+        var expires = "expires="+ d.toUTCString();
+        document.cookie = cname + "=" + "" + "; " + expires;
+        document.getElementById(cname).style.display = "none";
+    }
+    function getOnclick(){
+        var listNews ='';
+        var ca = document.cookie.split(';');
+        for(var i = 0; i <ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf('news') == 0) {
+                var name = c.split('=')[0];
+                var value = c.substring(name.length+1,c.length);
+                listNews += ' '+value;
+            }
+
+        }
+        var element = document.getElementById('listNews').value = listNews;
+        //getCookie('name_cookie');
+
+    }
+    function onclickRate(ele){
+    	var rate= ele.getAttribute('value');
+    	document.getElementById("rateStar").value =rate;
+    }
+</script>
 </body>
 </html>
