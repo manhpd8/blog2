@@ -56,3 +56,9 @@ Route::post('cart','CartController@postCart');
 
 Route::post('comment','NewsController@postComment');
 //Route::get('comment','NewsController@postComment');
+
+Route::group(['prefix'=>'client'],function(){
+	Route::get('login','ClientController@getLogin');
+	Route::get('register','ClientController@getRegister');
+	Route::post('register','ClientController@postRegister');
+});

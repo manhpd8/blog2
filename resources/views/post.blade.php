@@ -2,7 +2,7 @@
 @section('content')
     <div>
         <div class="bmcell_r"><img src="/blog2/public/img/icon.png">{{$news->news_name}}
-            <button type="button" onclick="addCart('news{{$news->news_id}}','{{$news->news_id}}','1')" style="float: right" class="btn btn-info" id="addnews{{$news->news_id}}">add to cart</button></div>
+            <button type="button" onclick="addCart('news{{$news->news_id}}','{{$news->news_id}}','1')" style="float: right" class="btn btn-warning" id="addnews{{$news->news_id}}">add to cart</button></div>
         <div class="bmcell_r_sub">
             <div id="bmcell_r_img1"></div>
             <div class="bmcell_r_con">
@@ -13,27 +13,21 @@
     </div>
     <br style="clear: both;">
     <div id="rate" >
-        <button class="btn btn-default" onclick="onclickRate(this)" value="1">
-            <img src="/blog2/public/img/icon-rate.png" class="img-rate">{{$rates[0]->num}}</button>
-        <button class="btn btn-default" onclick="onclickRate(this)" value="2">
-            <img src="/blog2/public/img/icon-rate.png" class="img-rate">
-            <img src="/blog2/public/img/icon-rate.png" class="img-rate">{{$rates[1]->num}}</button>
-        <button class="btn btn-default" onclick="onclickRate(this)" value="3">
-            <img src="/blog2/public/img/icon-rate.png" class="img-rate">
-            <img src="/blog2/public/img/icon-rate.png" class="img-rate">
-            <img src="/blog2/public/img/icon-rate.png" class="img-rate">{{$rates[2]->num}}</button>
-        <button class="btn btn-default" onclick="onclickRate(this)" value="4">
-            <img src="/blog2/public/img/icon-rate.png" class="img-rate">
-            <img src="/blog2/public/img/icon-rate.png" class="img-rate">
-            <img src="/blog2/public/img/icon-rate.png" class="img-rate">
-            <img src="/blog2/public/img/icon-rate.png" class="img-rate">{{$rates[3]->num}}</button>
-        <button class="btn btn-default" onclick="onclickRate(this)" value="5">
-            <img src="/blog2/public/img/icon-rate.png" class="img-rate">
-            <img src="/blog2/public/img/icon-rate.png" class="img-rate">
-            <img src="/blog2/public/img/icon-rate.png" class="img-rate">
-            <img src="/blog2/public/img/icon-rate.png" class="img-rate">
-            <img src="/blog2/public/img/icon-rate.png" class="img-rate">{{$rates[4]->num}}</button>
-        <button class="btn btn-default">{{$ratesAvg[0]->avg}}</button>
+        @for($lRate=1;$lRate<=5;$lRate++)
+            <button class="btn btn-default" onclick="onclickRate(this)" value="{{$lRate}}">
+                @for($lImg=1;$lImg<=$lRate;$lImg++)
+                    <img src="/blog2/public/img/icon-rate.png" class="img-rate">
+                @endfor
+                @foreach($rates as $rate)
+                    @if($rate->rate == $lRate)
+                        {{$rate->num}}
+                    @endif
+                @endforeach
+            </button>
+        @endfor
+        
+        <button class="btn btn-default">{{Round($ratesAvg[0]->avg)}}/5</button>
+        <div ><button class="btn btn-default" id="danhgia">Đánh giá /5</button></div>
     </div>
     <div class="comment">
         <form action="/blog2/public/comment" method="post">
@@ -46,7 +40,7 @@
     </div>
     <div>
         @foreach($comments as $comment)
-            <li class="comment2">{{$comment->comment_content}}</li>
+            <div class="comment2" >{{$comment->comment_content}}</div>
         @endforeach
     </div>
 <style type="text/css">
@@ -55,9 +49,10 @@
     height: 150px;
 }
 .comment2{
-    height: 26px;
-    margin-top: 3px;
+    padding: 7px;
     background-color:#B9AFAF;
+    margin: 0;
+    margin-top: 3px;
     width: 90%;
     margin-left: 5%;
 }

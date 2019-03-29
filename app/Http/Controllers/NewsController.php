@@ -86,7 +86,8 @@ class NewsController extends Controller
         $data['news'] = DB::table('blog_news')->where('news_id',$news_id)->first();
         $data['comments'] = DB::table('blog_comment')->where('news_id',$news_id)->orderby('created_at','desc')->take(5)->get()->toarray();
         $data['rates'] = DB::select('SELECT count(*) as num,rate FROM laravel_blog.blog_rate where news_id= '.$news_id.' group by rate order by rate');
-        $data['ratesAvg'] = DB::select('SELECT avg(rate) as avg FROM laravel_blog.blog_rate');
+        $data['ratesAvg'] = DB::select('SELECT avg(rate) as avg FROM laravel_blog.blog_rate where blog_rate.news_id ='.$news_id);
+
         #update so luot view
         $news_seen = $data['news']->news_seen;
         $news_seen++;

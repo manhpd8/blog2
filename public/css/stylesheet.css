@@ -135,7 +135,7 @@ body{
 	background-image: linear-gradient(#A4C2D6, #60A4D2);
   	color: #fff;
   	text-align: left;
-  	padding-top: 7px;
+  	padding-bottom: 4px;
 
 }
 .bmcell_r_sub{
@@ -277,4 +277,10 @@ hr{
 	color: #333;
     background-color: #fff;
     border-color: #ccc;
+}
+
+.btn-warning{
+	color: #fff;
+    background-color: #f0ad4e;
+    border-color: #eea236;
 }

@@ -159,6 +159,8 @@
     function onclickRate(ele){
     	var rate= ele.getAttribute('value');
     	document.getElementById("rateStar").value =rate;
+    	document.getElementById("danhgia").innerHTML ='Đánh giá '+rate+'/5';
+    	ele.style.color = 'red';
     }
 </script>
 </body>
