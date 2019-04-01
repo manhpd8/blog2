@@ -57,8 +57,11 @@ Route::post('cart','CartController@postCart');
 Route::post('comment','NewsController@postComment');
 //Route::get('comment','NewsController@postComment');
 
-Route::group(['prefix'=>'client'],function(){
+Route::group(['prefix'=>'client','middleware'=>'checkLoginClient'],function(){
 	Route::get('login','ClientController@getLogin');
+	Route::post('login','ClientController@postLogin');
 	Route::get('register','ClientController@getRegister');
 	Route::post('register','ClientController@postRegister');
+	Route::get('logout','ClientController@getLogout');
 });
+

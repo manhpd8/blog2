@@ -21,15 +21,20 @@
     <div class="tab-content">
         <div id="sectionA" class="tab-pane fade in active">
         <div class="innter-form">
-            <form class="sa-innate-form" method="post">
-            <label>Email Address</label>
-            <input type="text" name="username">
+            <form class="sa-innate-form" method="post">{{csrf_field()}}
+            <label>User name</label>
+            <input type="text" name="user">
+            <div style="color: red">{{ $errors->first('user') }}</div>
             <label>Password</label>
-            <input type="password" name="password">
+            <input type="password" name="pass">
+            <div style="color: red">{{ $errors->first('pass') }}</div>
             <button type="submit">Sign In</button>
             <a href="">Forgot Password?</a>
             </form>
             </div>
+            @if(Session::has('error'))
+                 <p class="alert alert-danger">{{Session::get('error')}}</p>
+            @endif
             <div class="social-login">
             <p>- - - - - - - - - - - - - Sign In With - - - - - - - - - - - - - </p>
     		<ul>

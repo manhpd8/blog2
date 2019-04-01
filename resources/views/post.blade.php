@@ -35,12 +35,20 @@
             <input type="" name="rate"  id="rateStar" value="0" hidden="true">
             <textarea style="width: 90%; height: 100px" name="comment_content"></textarea>
             <input type="" name="news_id" value="{{$news->news_id}}" hidden="true"/>
-            <button type="submit" class="btn btn-primary" style="">Comment</button>
+            @if(Session::has('sessionLoginClient'))
+                <button type="submit" class="btn btn-primary" style="">Comment</button>
+                <input type="" name="user_id" value="{{Session::get('sessionLoginClient')->user_id}}" hidden="true">
+            @else
+                <div>
+                    <a href="/blog2/public/client/register"><button class="btn btn-info">Đăng ký</button></a>
+                    <a href="/blog2/public/client/login"><button class="btn btn-primary">Đăng nhập</button></a>
+                </div>
+            @endif
         </form>
     </div>
     <div>
         @foreach($comments as $comment)
-            <div class="comment2" >{{$comment->comment_content}}</div>
+            <div class="comment2" >{{$comment->user_name}}: {{$comment->comment_content}} ({{$comment->created_at}})</div>
         @endforeach
     </div>
 <style type="text/css">

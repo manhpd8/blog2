@@ -29,6 +29,17 @@
 					        <input type="text" name="listNews" id="listNews" hidden="true">
 					        <button type="submit" onclick="getOnclick()"><img src="/blog2/public/img/icon-cart.png" height="30px"></button>
 					    </form>
+					    @if(Session::has('sessionLoginClient'))
+			                 <div>
+			                 	<p class="btn btn-warning" style="display: inline-block;">{{Session::get('sessionLoginClient')->user_name}}</p>
+			                 	<a href="/blog2/public/client/logout"><button class="btn btn-danger" style="display: inline-block;">Đăng xuất</button></a>
+			                 </div>
+			            @else
+						    <div style="float: right;">
+						    	<a href="/blog2/public/client/register"><button class="btn btn-info">Đăng ký</button></a>
+						    	<a href="/blog2/public/client/login"><button class="btn btn-primary">Đăng nhập</button></a>
+						    </div>
+						@endif
 					</div>
 				</td>
 			</tr>
@@ -160,7 +171,6 @@
     	var rate= ele.getAttribute('value');
     	document.getElementById("rateStar").value =rate;
     	document.getElementById("danhgia").innerHTML ='Đánh giá '+rate+'/5';
-    	ele.style.color = 'red';
     }
 </script>
 </body>

@@ -20,6 +20,7 @@ class CheckAdamin
             $coditions=[
                 'user_name'=>Session::get('login')->user_name,
                 'user_pass'=>Session::get('login')->user_pass,
+                'user_level'=>'1'
             ];
             if(DB::table('blog_users')->where($coditions)->count() ==1){
                 return $next($request);

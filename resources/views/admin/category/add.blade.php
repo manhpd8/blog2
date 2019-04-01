@@ -9,7 +9,9 @@
 			    <label for="exampleFormControlInput1">Name Category</label>
 			    <input type="text" class="form-control" name="name" placeholder="name post">
 			</div>
-			<p class="alert alert-danger">{{ $errors->first('name') }}</p>
+			@if($errors->first('name') != '')
+				<p class="alert alert-danger">{{ $errors->first('name') }}</p>
+		  	@endif
 		  	<div class="form-group">
 		    	<label for="exampleFormControlSelect1">Parent: </label>
 		    	<select class="form-control" name="parentId">

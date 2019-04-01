@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Session;
 use DB;
-class CheckLogin
+class CheckLoginClient
 {
     /**
      * Handle an incoming request.
@@ -20,7 +20,6 @@ class CheckLogin
             $coditions=[
                 'user_name'=>Session::get('login')->user_name,
                 'user_pass'=>Session::get('login')->user_pass,
-                'user_level'=>'1'
             ];
             if(DB::table('blog_users')->where($coditions)->count() ==1){
                 return redirect()->action('HomeController@getHome');

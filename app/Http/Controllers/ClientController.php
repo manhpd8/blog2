@@ -11,6 +11,58 @@ class ClientController extends Controller
 	function getLogin(){
 		return view('client.login');
 	}
+	function postLogin(Request $request){
+		$rules = [
+			'user'=>'required',
+			'pass'=>'required',
+		];
+		$messages = [
+			'user.required'=>'tài khoản không được để trống',
+
+			'pass.required'=>'mật khẩu không được để trống',
+		];
+		$Validator = Validator::make($request->all(),$rules,$messages);
+		// input
+		$name =  $request->input('user');
+		$pass = $request->input('pass');
+		if($Validator->fails()){
+			echo "loi validator";
+			$errors['errors']=$Validator->errors();
+			return response()->view('client.login',$errors);
+			
+		}
+		else{
+			$name =  $request->input('user');
+			$pass = $request->input('pass');
+			$path = $request->path();
+			$url = $request->url();
+			#$fullurl = $requet->fullurl();
+			$method = $request->method();
+			$coditions = [
+				'user_name'=>$name,
+				'user_pass'=>$pass,
+			];
+			// check db
+			if(DB::table('blog_users')->where($coditions)->count() > 0){
+				// luu cookie nguoi dung
+				$minutes =200;
+				$cookie = cookie('cookieLoginClient', $name, $minutes);
+				//luu session
+				$data = DB::table('blog_users')->where($coditions)->first();
+				Session::put('sessionLoginClient',$data);
+				$errors['success']='dang nhap thanh cong';
+				return redirect()->action('HomeController@getHome');
+				//return response()->view('home');//->withCookie($cookie);
+				
+
+			} else{
+				echo 'login false';
+				Session::flash('error','sai tai khoan mat khau');
+				return response()->view('client.login');
+			}
+		}
+	}
+
 	function getRegister(){
 		return view('client.register');
 	}
@@ -18,17 +70,22 @@ class ClientController extends Controller
 		$arr['user_name'] = $request->user_name;
 		$arr['user_pass'] = $request->user_pass;
 		if(StringUtility::isNull($arr['user_name'])){
-			$error['errors'] = ['null'=>'tai khoan khong duoc de trong'];
+			$errors['errors'] = ['null'=>'tai khoan khong duoc de trong'];
 			return redirect()->back()->with($errors);
 		}
 		$arr['created_at'] = gmdate("Y-m-d H:i:s",time()+7*3600);
-		$count = DB::select('select count(*) from blog_users where user_name ='.$arr['user_name']);
-		if($count == 0 ){
-			DB::table('blog_user')->insert($arr);
+		$count = DB::select('select count(*) as num from blog_users where user_name ="'.$arr['user_name'].'"');
+		if($count[0]->num == 0 ){
+			DB::table('blog_users')->insert($arr);
 			$error['success'] = 'dang ky thanh cong';
 			return view('client.login');
 		}
-		$error['errors'] = ['duplicate'=>'tai khoan da ton tai'];
+		$errors['errors'] = ['duplicate'=>'tai khoan da ton tai'];
 		return redirect()->back()->with($errors);
+	}
+
+	public function getLogout(){
+		Session::flush();
+		return redirect()->action('HomeController@getHome');
 	}
 }

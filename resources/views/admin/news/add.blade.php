@@ -10,7 +10,9 @@
 			    <label for="exampleFormControlInput1">Name Post</label>
 			    <input type="text" class="form-control" name="name" placeholder="name post">
 			</div>
-			<p class="alert alert-danger">{{ $errors->first('name') }}</p>
+			@if($errors->first('name') != '')
+				<p class="alert alert-danger">{{ $errors->first('name') }}</p>
+			@endif
 		  	<div class="form-group">
 		    	<label for="exampleFormControlSelect1">Category</label>
 		    	<select class="form-control" name="cat_id" id="cat_id">
@@ -32,7 +34,9 @@
 		    	<label for="exampleFormControlTextarea1">Content</label>
 		    	<textarea class="form-control" name="content" rows="3"></textarea>
 		  	</div>
-		  	<p class="alert alert-danger">{{ $errors->first('content') }}</p>
+		  	@if($errors->first('content') != '')
+		  		<p class="alert alert-danger">{{ $errors->first('content') }}</p>
+		  	@endif
 		  	<input type="file" name="img">
 		  	<button type="submit" class="btn btn-primary" name="add news">Post</button>
 		</form>

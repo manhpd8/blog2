@@ -44,6 +44,7 @@ class LoginController extends Controller
 			$coditions = [
 				'user_name'=>$name,
 				'user_pass'=>$pass,
+				'user_level' => '1'
 			];
 			// check db
 			if(DB::table('blog_users')->where($coditions)->count() > 0){
