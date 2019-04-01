@@ -40,8 +40,8 @@
                 <input type="" name="user_id" value="{{Session::get('sessionLoginClient')->user_id}}" hidden="true">
             @else
                 <div>
-                    <a href="/blog2/public/client/register"><button class="btn btn-info">Đăng ký</button></a>
-                    <a href="/blog2/public/client/login"><button class="btn btn-primary">Đăng nhập</button></a>
+                    <a href="/blog2/public/client/register"><button class="btn btn-info" type="button">Đăng ký</button></a>
+                    <a href="/blog2/public/client/login"><button class="btn btn-primary" type="button">Đăng nhập</button></a>
                 </div>
             @endif
         </form>
