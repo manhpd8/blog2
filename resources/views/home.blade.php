@@ -7,4 +7,9 @@
         	<span style="color: #000">({{$news->created_at}}) -{{$news->news_author}}</span>
         </li>
     @endforeach
+    <div style="text-align: center; margin-top: 10px ">
+	    @for($i=0;$i<=$maxpage;$i++)
+	    	<button style="height: 30px;width: 30px"><a href="/blog2/public/home/{{$i}}" style="color:  #007bff">{{$i+1}}</button></a>
+	    @endfor
+    </div>
 @stop

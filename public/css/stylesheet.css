@@ -14,7 +14,8 @@ p{
 	margin-top: 20px;
 }
 #footer{
-	width: 100%; margin-top: 17px
+	width: 100%; margin-top: 17px;
+	    text-align: center;
 }
 #btn_back{
 	float: left;
@@ -283,4 +284,7 @@ hr{
 	color: #fff;
     background-color: #f0ad4e;
     border-color: #eea236;
+}
+.page-link{
+	
 }

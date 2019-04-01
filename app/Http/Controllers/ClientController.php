@@ -86,6 +86,6 @@ class ClientController extends Controller
 
 	public function getLogout(){
 		Session::flush();
-		return redirect()->action('HomeController@getHome');
+		return redirect()->back();
 	}
 }

@@ -18,6 +18,7 @@
 #Route::get('login','LoginController@getLogin');
 Route::get('/','HomeController@getHome');
 Route::get('home','HomeController@getHome');
+Route::get('home/{page}','HomeController@getHomePage');
 Route::get('people','People@getName');
 #Route::post('login','LoginController@postLogin');
 Route::group(['prefix'=>'login','middleware'=>'checkLogin'], function(){
