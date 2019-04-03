@@ -10,9 +10,4 @@
             </li>
         @endforeach
     @endif
-    <form method="post">
-         {{ csrf_field ()}}
-        <input type="text" name="listNews" id="listNews" style="display: none">
-        <button type="submit"  onclick="getOnclick()" class="btn-primary">Lưu!</button>
-    </form>
 @endsection

@@ -175,4 +175,14 @@ class NewsController extends Controller
         
         return redirect()->back();
     }
+
+    function getSearch($page, $keyword){
+        $data = HomeController::getData();
+        $page_size = 19;
+        $numRecord = DB::select('SELECT count(*) FROM laravel_blog.blog_news where CONCAT_WS(" ",news_name, news_author, news_content) like"%'.$keyword.'%" limit '.$page.', '.$page_size);
+        $maxpage = (int)($numRecord[0]->size/$page_size);
+        $data['maxpage'] = $maxpage;
+        $data['allnews'] = DB::select('SELECT * FROM laravel_blog.blog_news where CONCAT_WS(" ",news_name, news_author, news_content) like"%'.$keyword.'%" limit '.$page.', '.$page_size);
+        return view('search',$data);
+    }
 }

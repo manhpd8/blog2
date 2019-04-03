@@ -66,3 +66,4 @@ Route::group(['prefix'=>'client','middleware'=>'checkLoginClient'],function(){
 	Route::get('logout','ClientController@getLogout');
 });
 
+// Route::get('search/{pasge}/{keyword}','NewsController@getSearch');

@@ -4,6 +4,7 @@
 	<title>Nhật minh logtics</title>
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="/blog2/public/css/stylesheet.css">
+
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   	<script src="/blog2/public/js/jquery.dataTables.min.js" ></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -19,13 +20,16 @@
 				</div></td>
 				<td width="50%">
 					<div id="hsearch">
-						<input type="text" name="" placeholder="Từ khóa..." style="height: 22px">
+						<form method="get" action="/blog2/pubic/search/0">
+							{{csrf_field()}}
+							<input type="text" name="" placeholder="Từ khóa..." style="height: 22px">
 						
-						<button id="btn_search">Tìm Kiếm</button>
+							<button id="btn_search" type="submit">Tìm Kiếm</button>
+						</form>
 					</div>
 					<div style="text-align: right;">
 						<form method="post" action="/blog2/public/cart">
-					         {{ csrf_field ()}}
+					         {{ csrf_field()}}
 					        <input type="text" name="listNews" id="listNews" hidden="true">
 					        <button type="submit" onclick="getOnclick()"><img src="/blog2/public/img/icon-cart.png" height="30px"></button>
 					    </form>
@@ -119,12 +123,13 @@
 	</div>
 	</div>
 	</div>
+	<button onclick="addCart('a','a','1')"></button>
 <script type="text/javascript">
     function addCart(cname, cvalue, exdays) {
         var d = new Date();
         d.setTime(d.getTime() + (exdays*24*60*60*1000));
         var expires = "expires="+ d.toUTCString();
-        document.cookie = cname + "=" + cvalue + "; " + expires;
+        document.cookie = cname + "=" + cvalue + "; " + expires+";path=/";
         document.getElementById("add"+cname).style.display = "none";
     }
     function getCookie(cname) {
@@ -145,7 +150,7 @@
         var d = new Date();
         d.setTime(d.getTime() );
         var expires = "expires="+ d.toUTCString();
-        document.cookie = cname + "=" + "" + "; " + expires;
+        document.cookie = cname + "=" + "" + "; " + expires+";path=/";
         document.getElementById(cname).style.display = "none";
     }
     function getOnclick(){

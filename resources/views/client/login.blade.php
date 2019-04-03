@@ -22,6 +22,7 @@
         <div id="sectionA" class="tab-pane fade in active">
         <div class="innter-form">
             <form class="sa-innate-form" method="post">{{csrf_field()}}
+            <input type="" name="urlBack" value="{{$urlBack}}" hidden="true">
             <label>User name</label>
             <input type="text" name="user">
             <div style="color: red">{{ $errors->first('user') }}</div>

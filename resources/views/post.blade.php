@@ -30,21 +30,27 @@
         <div ><button class="btn btn-default" id="danhgia">Đánh giá /5</button></div>
     </div>
     <div class="comment">
-        <form action="/blog2/public/comment" method="post">
-            {{ csrf_field() }}
-            <input type="" name="rate"  id="rateStar" value="0" hidden="true">
-            <textarea style="width: 90%; height: 100px" name="comment_content"></textarea>
-            <input type="" name="news_id" value="{{$news->news_id}}" hidden="true"/>
             @if(Session::has('sessionLoginClient'))
+            <form action="/blog2/public/comment" method="post">
+                {{ csrf_field() }}
+                <input type="" name="rate"  id="rateStar" value="0" hidden="true">
+                <textarea style="width: 90%; height: 100px" name="comment_content"></textarea>
+                <input type="" name="news_id" value="{{$news->news_id}}" hidden="true"/>
                 <button type="submit" class="btn btn-primary" style="">Comment</button>
                 <input type="" name="user_id" value="{{Session::get('sessionLoginClient')->user_id}}" hidden="true">
+            </form>
             @else
-                <div>
-                    <a href="/blog2/public/client/register"><button class="btn btn-info" type="button">Đăng ký</button></a>
-                    <a href="/blog2/public/client/login"><button class="btn btn-primary" type="button">Đăng nhập</button></a>
+                <div>   
+                    <form action="/blog2/public/client/login" method="get">
+                        {{ csrf_field() }}
+                        <input type="" name="urlBack" value="/blog2/public/news/newsid/{{$news->news_id}}" hidden="true">
+                        <a href="/blog2/public/client/register"><button class="btn btn-info" type="button">Đăng ký</button></a>
+                        <button class="btn btn-primary" type="submit">Đăng nhập</button>
+
+                    </form>
                 </div>
             @endif
-        </form>
+        
     </div>
     <div>
         @foreach($comments as $comment)

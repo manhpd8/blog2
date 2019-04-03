@@ -8,8 +8,10 @@ use Validator;
 use Session;
 class ClientController extends Controller
 {
-	function getLogin(){
-		return view('client.login');
+	function getLogin(Request $request){
+		$urlBack = $request->input('urlBack');
+		$data['urlBack'] = $urlBack;
+		return view('client.login',$data);
 	}
 	function postLogin(Request $request){
 		$rules = [
@@ -25,10 +27,11 @@ class ClientController extends Controller
 		// input
 		$name =  $request->input('user');
 		$pass = $request->input('pass');
+		
 		if($Validator->fails()){
 			echo "loi validator";
 			$errors['errors']=$Validator->errors();
-			return response()->view('client.login',$errors);
+			return redirect()->back()->with($errors);
 			
 		}
 		else{
