@@ -43,7 +43,7 @@
                 <div>   
                     <form action="/blog2/public/client/login" method="get">
                         {{ csrf_field() }}
-                        <input type="" name="urlBack" value="/blog2/public/news/newsid/{{$news->news_id}}" hidden="true">
+                        <input type="" name="urlBack" value="/news/newsid/{{$news->news_id}}" hidden="true">
                         <a href="/blog2/public/client/register"><button class="btn btn-info" type="button">Đăng ký</button></a>
                         <button class="btn btn-primary" type="submit">Đăng nhập</button>
 

@@ -10,6 +10,7 @@ class ClientController extends Controller
 {
 	function getLogin(Request $request){
 		$urlBack = $request->input('urlBack');
+
 		$data['urlBack'] = $urlBack;
 		return view('client.login',$data);
 	}
@@ -27,10 +28,11 @@ class ClientController extends Controller
 		// input
 		$name =  $request->input('user');
 		$pass = $request->input('pass');
-		
+		$urlBack = $request->input('urlBack');
 		if($Validator->fails()){
 			echo "loi validator";
 			$errors['errors']=$Validator->errors();
+			$errors['urlBack'] = $urlBack;
 			return redirect()->back()->with($errors);
 			
 		}
@@ -54,6 +56,9 @@ class ClientController extends Controller
 				$data = DB::table('blog_users')->where($coditions)->first();
 				Session::put('sessionLoginClient',$data);
 				$errors['success']='dang nhap thanh cong';
+				if(!StringUtility::isNull($urlBack)){
+					return redirect($urlBack);
+				}
 				return redirect()->action('HomeController@getHome');
 				//return response()->view('home');//->withCookie($cookie);
 				
@@ -61,7 +66,8 @@ class ClientController extends Controller
 			} else{
 				echo 'login false';
 				Session::flash('error','sai tai khoan mat khau');
-				return response()->view('client.login');
+				$errors['urlBack'] = $urlBack;
+				return redirect()->back()->with($errors);
 			}
 		}
 	}
