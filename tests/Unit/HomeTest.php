@@ -13,9 +13,6 @@ class HomeTest extends TestCase
      *
      * @return void
      */
-    protected  function setUp(){
-        parent::setUp();
-    }
 
     public function testGetHomePage()
     {
@@ -35,6 +32,14 @@ class HomeTest extends TestCase
     	$response = $this->visit('/cart');
         $response->assertResponseStatus(200)
         ->see('Shopping cart');
+    }
+
+    public function testAddToCart(){
+    	$response = $this->visit('news/newsid/22');
+        $response->assertResponseStatus(200)
+        ->see('add to cart')
+        ->click('add to cart')
+        ->seePageIs('/cart');
     }
 
 }
