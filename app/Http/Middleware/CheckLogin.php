@@ -23,7 +23,7 @@ class CheckLogin
                 'user_level'=>'1'
             ];
             if(DB::table('blog_users')->where($coditions)->count() ==1){
-                return redirect()->action('HomeController@getHome');
+                return view('admin.index');
             }
             else{
                 return $next($request);

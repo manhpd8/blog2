@@ -29,7 +29,7 @@
             <label>Password</label>
             <input type="password" name="pass">
             <div style="color: red">{{ $errors->first('pass') }}</div>
-            <button type="submit">Sign In</button>
+            <button type="submit" value="Sign In">Sign In</button>
             <a href="">Forgot Password?</a>
             </form>
             </div>

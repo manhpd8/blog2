@@ -123,7 +123,6 @@
 	</div>
 	</div>
 	</div>
-	<button onclick="addCart('a','a','1')"></button>
 <script type="text/javascript">
     function addCart(cname, cvalue, exdays) {
         var d = new Date();
