@@ -2,7 +2,7 @@
 @section('content')
     <div>
         <div class="bmcell_r"><img src="/blog2/public/img/icon.png">{{$news->news_name}}
-            <button type="button" onclick="addCart('news{{$news->news_id}}','{{$news->news_id}}','1')" style="float: right" class="btn btn-warning" id="addnews{{$news->news_id}}" value="add to cart"></button></div>
+            <button type="button" onclick="addCart('news{{$news->news_id}}','{{$news->news_id}}','1')" style="float: right" class="btn btn-warning" id="addnews{{$news->news_id}}">add to cart</button></div>
         <div class="bmcell_r_sub">
             <div id="bmcell_r_img1"></div>
             <div class="bmcell_r_con">
@@ -45,7 +45,7 @@
                         {{ csrf_field() }}
                         <input type="" name="urlBack" value="/news/newsid/{{$news->news_id}}" hidden="true">
                         <a href="/blog2/public/client/register"><button class="btn btn-info" type="button">Đăng ký</button></a>
-                        <button class="btn btn-primary" type="submit">Đăng nhập</button>
+                        <button class="btn btn-primary" type="submit" id="btn-login">Đăng nhập</button>
 
                     </form>
                 </div>

@@ -42,4 +42,6 @@ class HomeTest extends TestCase
         ->seePageIs('/cart');
     }
 
+    
+
 }
